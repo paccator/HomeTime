@@ -2,9 +2,9 @@
 
 framework 'Cocoa'
 
-ZONE = ARGV.shift || "UTC"
-FORMAT = ARGV.shift || "HH:mm"
-INTERVAL = ARGV.shift || 1
+ZONE = ENV['HT_ZONE'] || 'CET'
+FORMAT = ENV['HT_FORMAT'] || 'HH:mm'
+INTERVAL = ENV['HT_INTERVAL'] || 1
 
 def timeString
   @dateFormatter.stringFromDate(NSDate.date)
@@ -16,7 +16,13 @@ def update(sender)
   @statusItem.title = @caption = caption unless caption == @caption
 end
 
+# there is a shortcut NSApp, but we need to access sharedApplication first anyway,
+# so we can have @app anyway, so after this NSApp == @app
 @app = NSApplication.sharedApplication
+
+# default for not bundled app, and can be set in info.plist for bundled, but what the hell
+# (change to NSApplicationActivationPolicyRegular to force Dock/MenuBar even for unbundled app)
+@app.activationPolicy = NSApplicationActivationPolicyProhibited
 
 @dateFormatter = NSDateFormatter.new
 @dateFormatter.dateFormat = FORMAT
