@@ -2,9 +2,9 @@
 
 framework 'Cocoa'
 
-ZONE = ENV['HT_ZONE'] || 'CET'
-FORMAT = ENV['HT_FORMAT'] || 'HH:mm'
-INTERVAL = ENV['HT_INTERVAL'] || 1
+def getSetting(key, default)
+  @bundle.objectForInfoDictionaryKey(key) || ENV[key] || default
+end
 
 def timeString
   @dateFormatter.stringFromDate(NSDate.date)
@@ -20,13 +20,20 @@ end
 # so we can have @app anyway, so after this NSApp == @app
 @app = NSApplication.sharedApplication
 
-# default for not bundled app, and can be set in info.plist for bundled, but what the hell
+# default for not bundled app, and can be set in Info.plist for bundled,
+# but that way we are bundle independant
 # (change to NSApplicationActivationPolicyRegular to force Dock/MenuBar even for unbundled app)
 @app.activationPolicy = NSApplicationActivationPolicyProhibited
 
+@bundle = NSBundle.mainBundle
+
+@_zone = getSetting("HomeTimeZone", "UTC")
+@_format = getSetting("HomeTimeFormat", "HH:mm")
+@_interval = getSetting("HomeTimeInterval", 1)
+
 @dateFormatter = NSDateFormatter.new
-@dateFormatter.dateFormat = FORMAT
-@dateFormatter.timeZone = NSTimeZone.timeZoneWithAbbreviation(ZONE)
+@dateFormatter.timeZone = NSTimeZone.timeZoneWithAbbreviation(@_zone)
+@dateFormatter.dateFormat = @_format
 
 @statusBar = NSStatusBar.systemStatusBar
 
@@ -34,7 +41,7 @@ end
 @statusItem.title = timeString
 @statusItem.enabled = false # also makes it gray ofc, which is what we want more then not clicking itself
 
-@timer = NSTimer.scheduledTimerWithTimeInterval INTERVAL.to_f,
+@timer = NSTimer.scheduledTimerWithTimeInterval @_interval.to_f,
   target:self, selector:'update:', userInfo:nil, repeats:true
 
 @app.run

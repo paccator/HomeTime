@@ -28,12 +28,14 @@
     <string>public.app-category.utilities</string>
     <key>LSEnvironment</key>
     <dict>
-      <key>HT_ZONE</key>
-      <string>CET</string>
-      <key>HT_FORMAT</key>
-      <string>HH:mm</string>
-      <key>HT_INTERVAL</key>
-      <string>1</string>
+      <key>HomeTimeExample</key>
+      <string>UTC</string>
     </dict>
+    <key>HomtTimeZone</key>
+    <string>UTC</string>
+    <key>HomtTimeFormat</key>
+    <string>HH:mm</string>
+    <key>HomeTimeInterval</key>
+    <string>1</string>
   </dict>
 </plist>
