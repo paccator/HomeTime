@@ -29,6 +29,6 @@ end
 @statusItem.enabled = false # also makes it gray ofc, which is what we want more then not clicking itself
 
 @timer = NSTimer.scheduledTimerWithTimeInterval INTERVAL.to_f,
-  target:self, selector:"update:", userInfo:nil, repeats:true
+  target:self, selector:'update:', userInfo:nil, repeats:true
 
 @app.run
