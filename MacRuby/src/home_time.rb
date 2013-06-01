@@ -39,9 +39,12 @@ end
 
 @statusItem = @statusBar.statusItemWithLength(NSVariableStatusItemLength)
 @statusItem.title = timeString
+@statusItem.toolTip = "Home Time - #{@_zone}"
 @statusItem.enabled = false # also makes it gray ofc, which is what we want more then not clicking itself
 
 @timer = NSTimer.scheduledTimerWithTimeInterval @_interval.to_f,
   target:self, selector:'update:', userInfo:nil, repeats:true
+
+NSLog("Home Time - #{@_zone} (#{@_format} at #{@_interval.to_f}s)") # also stderr
 
 @app.run
