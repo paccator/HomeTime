@@ -34,7 +34,7 @@
     <key>HomtTimeZone</key>
     <string>UTC</string>
     <key>HomtTimeFormat</key>
-    <string>HH:mm</string>
+    <string>HH:mm V</string>
     <key>HomeTimeInterval</key>
     <string>1</string>
   </dict>
